@@ -26,7 +26,7 @@ type pageExtract struct {
 	Query         query
 }
 
-// GetWikiPageContent returns the content string of a Wikipedia page identified by pageId
+// GetWikiPageContent returns the content and title of a Wikipedia as strings page identified by pageId
 func GetWikiPageContent(pageID string) (string, string, error) {
 	var content = ""
 	var title = ""
