@@ -26,6 +26,10 @@ type pageExtract struct {
 	Query         query
 }
 
+// WPQueryURIFmtString contains a format string that requires a list of Page IDs (only one Page ID is used here)
+// See https://www.mediawiki.org/wiki/API:Query for more details
+const WPQueryURIFmtString = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&pageids=%s&format=json&exlimit=1&explaintext=true&exsectionformat=raw"
+
 // GetWikiPageContent returns the content and title of a Wikipedia as strings page identified by pageId
 func GetWikiPageContent(pageID string) (string, string, error) {
 	var content = ""
@@ -35,8 +39,7 @@ func GetWikiPageContent(pageID string) (string, string, error) {
 
 	if _, err := strconv.ParseInt(pageID, 10, 64); err == nil {
 		// urlFormat deviates from suggested URI in spec to elimnate HTML fron returned content
-		const urlFormat = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&pageids=%s&format=json&exlimit=1&explaintext=true&exsectionformat=raw"
-		var url = fmt.Sprintf(urlFormat, pageID)
+		var url = fmt.Sprintf(WPQueryURIFmtString, pageID)
 
 		var resp, err = http.Get(url)
 
