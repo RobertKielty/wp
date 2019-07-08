@@ -27,8 +27,9 @@ type pageExtract struct {
 }
 
 // GetWikiPageContent returns the content string of a Wikipedia page identified by pageId
-func GetWikiPageContent(pageID string) (string, error) {
+func GetWikiPageContent(pageID string) (string, string, error) {
 	var content = ""
+	var title = ""
 	var err error
 	var errorMessage string
 
@@ -53,15 +54,14 @@ func GetWikiPageContent(pageID string) (string, error) {
 			rlog.Errorf("json.NewDecoder(resp.Body).Decode(%#v) %q!\n", extract, err)
 		}
 
-		// var foundtitle = extract.Query.Pages[pageID].Title
+		title = extract.Query.Pages[pageID].Title
 		content = extract.Query.Pages[pageID].Text
 		rlog.Debug(url)
 	} else {
 		errorMessage = fmt.Sprintf("wp.GetWikiPageContent ERROR pageID \"%s\" is not a number, REST API request NOT sent to Wikipedia", pageID)
 		err = errors.New(errorMessage)
-		rlog.Info(err)
-		return "", err
+		rlog.Error(err)
+		return "", "", err
 	}
-
-	return content, err
+	return content, title, err
 }
