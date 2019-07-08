@@ -9,9 +9,9 @@ import (
 )
 
 // These tests use live Wikipedia to test funcionality developed.
-// I would nromal mock out a third party service say useing Wirmock
-// Or implementing a canned response myself depending on the range
-// of calls made to a the thrid part service.
+// I would normally mock out a third party service say using Wirmock
+// or implementa canned response myself depending on the range of
+// calls made to the third part service.
 func TestGetWikiPageContentError(t *testing.T) {
 	cases := []struct {
 		testName                         string
@@ -22,9 +22,9 @@ func TestGetWikiPageContentError(t *testing.T) {
 		expectedApproximateContentLength int
 		alloweLengthVariancePercentage   int
 	}{
-		{"Error is empty test", "21721040", "Stack Overflow", "", 1000, 5},
-		{"Error is empty test", "21721040", "Stack Overflow 1", "", 1000, 5},
-		{"Error is set : invalid PageID", "2172104asdasd0", "", "wp.GetWikiPageContent ERROR pageID \"2172104asdasd0\" is not a number, REST API request NOT sent to Wikipedia", 0, 5},
+		{"Error is empty test", "21721040", "Stack Overflow", "Jeff Atwood", "", 1000, 5},
+		{"Error is empty test", "21721040", "Stack Overflow", "Jeff Atwood", "", 1000, 5},
+		{"Error is set : invalid PageID", "2172104asdasd0", "", "", "wp.GetWikiPageContent ERROR pageID \"2172104asdasd0\" is not a number, REST API request NOT sent to Wikipedia", 0, 5},
 	}
 
 	rlog.SetOutput(os.Stderr)
